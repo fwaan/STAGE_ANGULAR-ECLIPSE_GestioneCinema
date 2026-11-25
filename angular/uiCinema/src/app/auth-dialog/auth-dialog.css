@@ -1,0 +1,90 @@
+:host {
+  --primary: #5b4fc4;
+  --primary-dark: #3c3489;
+  --text: #1f1b4d;
+  --muted: #6b6890;
+  --danger: #c0392b;
+  display: block;
+}
+
+.auth-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 16px 4px 24px;
+}
+
+.auth-logo {
+  height: 40px;
+  width: auto;
+}
+
+.auth-title {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.close-btn {
+  color: var(--muted);
+}
+
+.auth-content {
+  padding: 8px 24px 24px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 24px;
+}
+
+.form-error {
+  margin: 0;
+  color: var(--danger);
+  font-size: 0.9rem;
+}
+
+.submit-btn {
+  --mdc-filled-button-container-color: var(--primary);
+  --mdc-filled-button-label-text-color: #fff;
+  --mat-button-filled-container-color: var(--primary);
+  --mat-button-filled-label-text-color: #fff;
+  --mdc-filled-button-container-shape: 999px;
+  --mat-button-filled-container-shape: 999px;
+  --mdc-filled-button-container-height: 48px;
+  --mat-button-filled-container-height: 48px;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.submit-btn:hover:not([disabled]) {
+  --mdc-filled-button-container-color: var(--primary-dark);
+  --mat-button-filled-container-color: var(--primary-dark);
+}
+
+.auth-form ::ng-deep .mat-mdc-form-field {
+  --mdc-outlined-text-field-focus-outline-color: var(--primary);
+  --mdc-outlined-text-field-focus-label-text-color: var(--primary);
+  --mat-form-field-focus-select-arrow-color: var(--primary);
+}
+
+:host ::ng-deep .mat-mdc-tab-group {
+  --mdc-tab-indicator-active-indicator-color: var(--primary);
+  --mat-tab-header-active-label-text-color: var(--primary);
+  --mat-tab-header-active-focus-label-text-color: var(--primary);
+  --mat-tab-header-active-hover-label-text-color: var(--primary);
+  --mat-tab-header-active-ripple-color: var(--primary);
+}
+
+.auth-content {
+  overflow-x: hidden;
+}
+
+:host ::ng-deep .mat-mdc-tab-body-content {
+  overflow-x: hidden;
+}

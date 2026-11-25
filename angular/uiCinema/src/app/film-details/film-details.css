@@ -1,0 +1,255 @@
+:host {
+  --primary: #5b4fc4;
+  --primary-dark: #3c3489;
+  --surface: #eceaf9;
+  --text: #1f1b4d;
+  --muted: #6b6890;
+  display: block;
+}
+
+/* larghezza massima della pagina */
+main.container {
+  max-width: 1100px;
+}
+
+/* icone Material: dimensione coerente */
+mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  flex-shrink: 0;
+}
+
+.back-link {
+  color: var(--primary);
+  text-decoration: none;
+  margin-left: -12px;
+}
+
+/* ---------- Scheda film ---------- */
+section.row {
+  align-items: center !important;
+}
+
+.poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(31, 27, 77, 0.22);
+}
+
+.chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: #d9d5f5;
+  color: var(--primary-dark);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.chip mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+}
+
+.film-title {
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  color: var(--text);
+}
+
+/* prezzo (icona euro + numero) */
+.film-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 16px 0 20px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #fff4e0;
+  color: #854f0b;
+}
+
+.film-rating mat-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  color: #ba7517;
+}
+
+.film-rating strong {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.film-desc {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #3c3a5e;
+  max-width: 60ch;
+  margin-bottom: 12px;
+}
+
+.film-meta {
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ---------- Proiezioni ---------- */
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.proiezione {
+  background: var(--surface) !important;
+  border-radius: 20px !important;
+  padding: 18px 24px;
+  box-shadow: none !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.proiezione:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(91, 79, 196, 0.15) !important;
+}
+
+.proiezione-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.orario {
+  display: flex;
+  flex-direction: column;
+  min-width: 90px;
+  padding-right: 24px;
+  border-right: 1px solid #cfcbea;
+}
+
+.ora {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--primary);
+}
+
+.giorno {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.dettagli {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.sala {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.posti {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #27500a;
+}
+
+.posti .dot {
+  width: 8px;
+  height: 8px;
+  margin: 0 6px;
+  border-radius: 50%;
+  background: #3b6d11;
+}
+
+/* ---------- Bottone acquisto ---------- */
+/* funziona sia come bottone Material sia come bottone nativo */
+.buy-btn {
+  --mdc-filled-button-container-color: var(--primary);
+  --mdc-filled-button-label-text-color: #fff;
+  --mat-button-filled-container-color: var(--primary);
+  --mat-button-filled-label-text-color: #fff;
+  --mdc-filled-button-container-shape: 999px;
+  --mat-button-filled-container-shape: 999px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  margin-left: auto;
+  padding: 0 24px;
+  border: none;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(91, 79, 196, 0.3);
+  transition: background 0.15s ease;
+}
+
+.buy-btn:hover:not([disabled]) {
+  --mdc-filled-button-container-color: var(--primary-dark);
+  --mat-button-filled-container-color: var(--primary-dark);
+  background: var(--primary-dark);
+}
+
+.buy-btn[disabled] {
+  background: #d6d4e6;
+  color: var(--muted);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 767.98px) {
+  .proiezione-row {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .buy-btn {
+    width: 100%;
+    margin-left: 0;
+  }
+}

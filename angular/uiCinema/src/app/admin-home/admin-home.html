@@ -1,0 +1,104 @@
+<!-- qua ci va messa la navbar che non so qual è-->
+
+<div class="admin-layout">
+  <section class="panel films-panel">
+    <header class="panel-header">
+      <h2 class="panel-title">Lista film</h2>
+      <button mat-flat-button class="primary-btn" (click)="nuovoFilm()">
+        <mat-icon>add</mat-icon>
+        Nuovo film
+      </button>
+    </header>
+
+    <div class="panel-body">
+      <!-- questo non mi funziona è da testare da te fruttolo-->
+      @for (film of films; track film.id) {
+        <div class="film-item"
+             [class.selected]="film.id === selected?.id"
+             tabindex="0" role="button"
+             (click)="seleziona(film)"
+             (keyup.enter)="seleziona(film)">
+
+          <div class="film-info">
+            <span class="film-name">{{ film.title }}</span>
+            <span class="film-sub">
+              {{ film.genre }} · {{ film.duration_in_minutes }} min ·
+              {{ film.starter_price | currency:'EUR':'symbol':'1.2-2':'it' }}
+            </span>
+          </div>
+
+          <!-- questi so finiti-->
+          <div class="actions">
+            <button mat-icon-button aria-label="Modifica film"
+                    (click)="modificaFilm(film); $event.stopPropagation()">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button class="danger" aria-label="Elimina film"
+                    (click)="eliminaFilm(film); $event.stopPropagation()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      } @empty {
+        <p class="empty">Nessun film presente.</p>
+      }
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+  <section class="panel projections-panel">
+    @if (selected) {
+      <header class="panel-header">
+        <h2 class="panel-title">
+          Proiezioni di <span class="highlight">{{ selected.title }}</span>
+        </h2>
+        <button mat-flat-button class="primary-btn" (click)="nuovaProiezione()">
+          <mat-icon>add</mat-icon>
+          Nuova proiezione
+        </button>
+      </header>
+
+      <div class="panel-body">
+        @for (p of projections; track p.id) {
+          <div class="projection-item">
+            <div class="when">
+              <span class="time">{{ p.projection_time | date:'HH:mm' }}</span>
+              <span class="date">{{ p.projection_time | date:'dd/MM/yyyy' }}</span>
+            </div>
+
+            <div class="meta">
+              <span class="meta-line"><mat-icon>weekend</mat-icon>{{ p.hall }}</span>
+              <span class="meta-line"><mat-icon>group</mat-icon>{{ p.capacity }} posti</span>
+            </div>
+
+            <div class="actions">
+              <button mat-icon-button aria-label="Modifica proiezione"
+                      (click)="modificaProiezione(p)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="danger" aria-label="Elimina proiezione"
+                      (click)="eliminaProiezione(p)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        } @empty {
+          <p class="empty">Nessuna proiezione per questo film.</p>
+        }
+      </div>
+    } @else {
+      <div class="placeholder">
+        <mat-icon>movie</mat-icon>
+        <p>Seleziona un film per vedere le sue proiezioni.</p>
+      </div>
+    }
+  </section>
+
+</div>

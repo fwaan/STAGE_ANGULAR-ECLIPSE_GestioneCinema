@@ -1,0 +1,34 @@
+<!--<section class = "listing">
+    <img class = "listing-photo"
+        [src] = "posterUrl | async"
+        alt = "movie poster"
+        crossorigin
+        />
+    <h1 class = "listing-heading">{{film().title}}</h1>
+    <h2 class = "listing-location">{{film().genre}}</h2>
+    <h3 class = "listing-location">{{film().starter_price}}</h3>
+    <a [routerLink]="['/details', film().title]">Learn More</a>
+</section> -->
+<a [routerLink]="['/details', film().title]">
+  <mat-card
+    class="film-card h-100"
+    appearance="raised"
+    [routerLink]="['/film', film().id]"
+    tabindex="0"
+  >
+    <img mat-card-image [src]="posterUrl | async" [alt]="film().title" />
+
+    <mat-card-header>
+      <mat-card-title>{{ film().title }}</mat-card-title>
+      <mat-card-subtitle>{{ film().genre }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content class="film-footer">
+      <span class="duration"
+        ><mat-icon>hourglass</mat-icon>{{ film().duration_in_minutes + ' min' }}</span
+      >
+
+      <span class="more">Dettagli <mat-icon>chevron_right</mat-icon></span>
+    </mat-card-content>
+  </mat-card>
+</a>

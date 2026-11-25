@@ -1,0 +1,21 @@
+
+<app-home-nav-bar (titleSearched)="filter($event)"/>
+
+
+
+<main class="container py-5 paninofritto">
+    <h1 class="section-title mb-4">In programmazione</h1>
+    
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @for(film of (filmsFilter | async) | filmPipe: this.filtroLetto; track film.id){
+            <div class="col">
+                <app-film [film]="film"/>
+            </div>
+        } @empty {
+        }
+
+
+    </div>
+    
+</main>
+    

@@ -1,0 +1,49 @@
+<header>
+  <mat-toolbar class="app-nav">
+    <div class="container-fluid d-flex align-items-center gap-3 w-100">
+      <a
+        routerLink="/"
+        class="d-flex align-items-center text-decoration-none flex-shrink-0"
+      >
+        <img class="logo" src="/cat.svg" alt="CineGatto" />
+        <span class="brand d-none d-md-inline ms-2">CineGatto</span>
+      </a>
+
+      @if (auth.isLoggedIn()) {
+        <button
+          mat-flat-button
+          class="login-btn d-none d-sm-inline-flex"
+          (click)="auth.logout()"
+        >
+          <mat-icon>logout</mat-icon>
+          {{ auth.userEmail() }} · Esci
+        </button>
+        <button
+          mat-icon-button
+          class="login-icon d-sm-none"
+          (click)="auth.logout()"
+          aria-label="Esci"
+        >
+          <mat-icon>logout</mat-icon>
+        </button>
+      } @else {
+        <button
+          mat-flat-button
+          class="login-btn d-none d-sm-inline-flex"
+          (click)="openAuth()"
+        >
+          <mat-icon>login</mat-icon>
+          Accedi / Registrati
+        </button>
+        <button
+          mat-icon-button
+          class="login-icon d-sm-none"
+          (click)="openAuth()"
+          aria-label="Accedi"
+        >
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      }
+    </div>
+  </mat-toolbar>
+</header>

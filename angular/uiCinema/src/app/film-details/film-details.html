@@ -1,0 +1,75 @@
+<app-film-nav-bar></app-film-nav-bar>
+
+@if (this.film | async; as film) {
+  <main class="container py-4">
+
+    <section class="row g-4 align-items-start mt-1">
+      <div class="col-12 col-md-4 col-lg-3">
+        @if(this.omdbResponse | async; as response){
+            <img class="poster" [src]="response.Poster" [alt]="film.title">
+        }@else {
+            <img class="poster" src="/cat.svg" alt="loading">
+        }
+    </div>
+
+      <div class="col-12 col-md-8 col-lg-9">
+        <div class="chips">
+          <span class="chip">{{ film.genre }}</span>
+          <span class="chip"><mat-icon>hourglass</mat-icon>{{ film.duration_in_minutes + " min" }}</span>
+        </div>
+
+        <h1 class="film-title">{{ film.title }}</h1>
+
+        <div class="film-rating">
+          <mat-icon>euro_symbol</mat-icon>
+          <strong>{{ film.starter_price }}</strong>
+        </div>
+
+        @if (this.omdbResponse | async; as response) {
+          <p class="film-desc">{{ response.Plot }}</p>
+          <p class="film-meta">Regia: {{ response.Director }}</p>
+        }
+      </div>
+    </section>
+
+    <!-- Proiezioni -->
+    <section class="mt-5">
+      <h2 class="section-title">Proiezioni</h2>
+
+      <div class="d-flex flex-column gap-3">
+        @for (p of this.projections | async; track $index; let idx = $index) {
+            @let postiDisponibili = getPostiDisponibili(idx) | async;
+          <mat-card class="proiezione" appearance="raised">
+            <div class="proiezione-row">
+
+              <div class="orario">
+                <div class="ora">{{ p.projection_time| date:'HH:mm' }}</div>
+                <div class="giorno">{{ p.projection_time | date:'dd/MM' }}</div>
+              </div>
+
+              <div class="dettagli">
+                <div class="sala"><mat-icon>weekend</mat-icon> {{ p.hall }}</div>
+                <div class="posti" [class]="'posti ' + p.capacity">
+                  <span class="dot"></span>
+                   {{ postiDisponibili }} posti disponibili 
+                </div>
+              </div>
+
+              <button mat-flat-button class="buy-btn"
+                      [disabled]="postiDisponibili === 0"
+                      (click)="acquista(p)">
+                <mat-icon>confirmation_number</mat-icon>
+                {{ postiDisponibili === 0 ? 'Esaurito' : 'Acquista biglietto' }}
+              </button>
+
+            </div>
+          </mat-card>
+        } @empty {
+          <p class="text-secondary">Nessuna proiezione in programma.</p>
+        }
+      </div>
+    </section>
+  </main>
+} @else {
+  <p class="container py-5">Caricamento...</p>
+}

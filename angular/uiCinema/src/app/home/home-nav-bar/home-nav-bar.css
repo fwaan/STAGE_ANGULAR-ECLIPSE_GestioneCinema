@@ -1,0 +1,58 @@
+:host {
+  --primary: #5b4fc4;
+  --surface: #eceaf9;
+}
+
+
+header {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #fff;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+}
+
+.app-nav {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 16px;
+  background: #fff;
+}
+
+.app-nav .logo {
+  height: 48px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.brand {
+  white-space: nowrap;
+  line-height: 1;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #1f1b4d;
+}
+
+.search-field {
+  max-width: 560px;
+}
+
+.search-field ::ng-deep .mdc-text-field--outlined {
+  border-radius: 999px;
+}
+
+.login-btn {
+  --mdc-filled-button-container-color: var(--primary);
+  --mdc-filled-button-label-text-color: #fff;
+  --mat-button-filled-container-color: var(--primary);
+  --mat-button-filled-label-text-color: #fff;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.login-icon {
+  color: var(--primary);
+}
+
+

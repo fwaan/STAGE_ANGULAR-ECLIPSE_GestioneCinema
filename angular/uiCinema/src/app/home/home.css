@@ -1,0 +1,13 @@
+:host {
+  --primary: #5b4fc4;
+  --surface: #eceaf9;
+}
+
+.section-title {
+  font-weight: 700;
+  color: #1f1b4d;
+}
+
+
+
+
