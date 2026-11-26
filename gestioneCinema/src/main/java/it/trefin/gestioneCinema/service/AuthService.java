@@ -23,8 +23,9 @@ public class AuthService {
 	public static final long DURATION_TOKEN = 1000*60*30;
 	
 	
-	public String generateToken(String email) {
+	public String generateToken(String email, boolean admin) {
 		Map<String, Object> claims = new HashMap<>();
+		claims.put("admin", admin);
 		return createToken(claims, email);
 	}
 	

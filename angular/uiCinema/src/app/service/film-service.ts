@@ -3,6 +3,13 @@ import { FilmModel } from '../model/film';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface NewFilm{
+    title: string;
+    genre: string;
+    duration_in_minutes: number;
+    starter_price: number;
+}
+
 @Service()
 export class FilmService {
 
@@ -19,5 +26,17 @@ export class FilmService {
 
     findByTitle(movie_title: string): Observable<FilmModel>{
         return this.client.get<FilmModel>(this.baseApi + "/byName/" + movie_title);
+    }
+
+    insert(film: NewFilm): Observable<string> {
+        return this.client.post(this.baseApi + "/insert", film, {responseType: 'text'});
+    }
+
+    update(film: number, newFilm: NewFilm) {
+        return this.client.put<FilmModel>(this.baseApi + "/modify" + film, newFilm);
+    }
+
+    delete(film: number) {
+        return this.client.delete<FilmModel>(this.baseApi + "/delete" + film);
     }
 }

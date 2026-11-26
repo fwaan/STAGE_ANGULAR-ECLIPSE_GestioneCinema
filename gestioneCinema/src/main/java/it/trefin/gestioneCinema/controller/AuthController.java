@@ -62,8 +62,10 @@ public class AuthController {
 		Authentication authentication = manager.authenticate(
 				new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
 		);
-		if(authentication.isAuthenticated())
-			return authService.generateToken(request.getUsername());
+		if(authentication.isAuthenticated()) {
+			return authService.generateToken(request.getUsername(), authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")));
+		
+		}
 		else
 			throw new UsernameNotFoundException("Invalid user request");
 	}

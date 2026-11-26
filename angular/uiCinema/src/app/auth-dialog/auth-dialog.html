@@ -67,7 +67,7 @@
 
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Data di nascita</mat-label>
-          <input matInput type="date" formControlName="dob" autocomplete="bday">
+          <input matInput type="date" formControlName="dob" autocomplete="bday" class="camponascita">
           @if (registerForm.controls.dob.touched && registerForm.controls.dob.invalid) {
             <mat-error>Inserisci la data di nascita</mat-error>
           }
