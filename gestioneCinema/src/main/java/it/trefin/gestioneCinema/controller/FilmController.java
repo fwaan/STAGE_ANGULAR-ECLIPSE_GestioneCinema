@@ -27,7 +27,6 @@ public class FilmController {
 		this.service = service;
 	}
 	
-	//NON STAMPA DURATION
 	@GetMapping("/all")
 	public List<Film> getAll(){
 		return service.getAll();

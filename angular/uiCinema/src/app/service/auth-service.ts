@@ -32,6 +32,17 @@ export class AuthService {
     }
   });
 
+  isAdmin = computed(() => {
+    const p = this.decodePayload(this.token());
+    return p?.admin === true || p?.admin === 'true';
+  });
+
+
+  userId = computed(() => {
+    const p = this.decodePayload(this.token());
+    return typeof p?.uid === 'number' ? (p.uid as number) : null;
+  });
+
   login(email: string, password: string): Observable<string> {
     return this.client
       .post(this.baseApi + '/generateToken', { username: email, password }, { responseType: 'text' })
@@ -66,6 +77,18 @@ export class AuthService {
       }
       return t;
     } catch {
+      return null;
+    }
+  }
+
+  private decodePayload(token: string | null): any {
+    if (!token) return null;
+    try {
+      const part = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+      const padded = part + '='.repeat((4 - (part.length % 4)) % 4);
+      return JSON.parse(atob(padded));
+    } catch (e) {
+      console.error('Token non leggibile', e);
       return null;
     }
   }

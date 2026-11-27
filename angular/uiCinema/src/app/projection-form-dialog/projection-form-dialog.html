@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>
+  {{ isEdit ? 'Modifica proiezione' : 'Nuova proiezione' }} · {{ data.film.title }}
+</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="projection-form">
+
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Sala</mat-label>
+      <input matInput formControlName="hall">
+      @if (form.controls.hall.touched && form.controls.hall.invalid) {
+        <mat-error>Inserisci la sala</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Data e ora</mat-label>
+      <input matInput type="datetime-local" formControlName="projection_time">
+      @if (form.controls.projection_time.touched && form.controls.projection_time.invalid) {
+        <mat-error>Inserisci data e ora</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Posti</mat-label>
+      <input matInput type="number" formControlName="capacity" min="1">
+      @if (form.controls.capacity.touched && form.controls.capacity.invalid) {
+        <mat-error>Inserisci un numero di posti valido</mat-error>
+      }
+    </mat-form-field>
+
+    @if (isEdit) {
+      <p class="form-hint">Sala e orario non si possono cambiare: elimina la proiezione e creane una nuova.</p>
+    }
+
+    @if (error()) {
+      <p class="form-error">{{ error() }}</p>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close>Annulla</button>
+    <button mat-flat-button type="submit" [disabled]="loading()">
+      {{ loading() ? 'Salvataggio…' : 'Salva' }}
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,29 @@
+.projection-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 8px;
+}
+
+.form-error {
+  margin: 0;
+  color: #c0392b;
+  font-size: 0.9rem;
+}
+
+.form-hint {
+  margin: 0;
+  color: #6b6890;
+  font-size: 0.85rem;
+}
+
+input[type='datetime-local']::-webkit-datetime-edit {
+  overflow: visible;
+  line-height: 1.6;
+  padding: 2px 0;
+}
+
+input[type='datetime-local']::-webkit-datetime-edit-fields-wrapper {
+  overflow: visible;
+  padding: 0;
+}

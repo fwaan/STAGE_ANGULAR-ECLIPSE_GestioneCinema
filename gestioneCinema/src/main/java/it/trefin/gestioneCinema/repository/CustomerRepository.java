@@ -12,4 +12,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>{
 	@Query(value = "SELECT * FROM customer WHERE id = :id", nativeQuery = true)
 	Optional<Customer> myFindById(long id);
 
+	Optional<Customer> findByCustAuthEmail(String email);
+
 }

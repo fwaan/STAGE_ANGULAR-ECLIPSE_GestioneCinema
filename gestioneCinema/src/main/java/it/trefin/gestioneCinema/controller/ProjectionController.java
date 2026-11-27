@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,8 +57,23 @@ public class ProjectionController {
 		service.insert(p);
 	}
 	
+	@PutMapping("/modify")
+	@Transactional
+	public void modify(@RequestParam String hall,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime projection_time,
+			@RequestParam int capacity) {
+		service.modify(hall, projection_time, capacity);
+	}
+
+	@DeleteMapping("/delete")
+	@Transactional
+	public void remove(@RequestParam String hall,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime projection_time) {
+		service.remove(hall, projection_time);
+	}
+
 	@GetMapping("/seatsLeft")
-	public int seatsLeft(@RequestParam LocalDateTime projection_time, @RequestParam String hall) {
+	public int seatsLeft(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime projection_time, @RequestParam String hall) {
 		return service.seatsLeft(projection_time, hall);
 	}
 	

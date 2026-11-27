@@ -3,3 +3,7 @@
   --primary: #5b4fc4;
   --surface: #eceaf9;
 }
+
+a {
+  text-decoration: none;
+}

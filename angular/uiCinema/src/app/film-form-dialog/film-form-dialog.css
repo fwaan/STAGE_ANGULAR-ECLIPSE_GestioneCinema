@@ -1,0 +1,12 @@
+.film-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 8px;
+}
+ 
+.form-error {
+  margin: 0;
+  color: #c0392b;
+  font-size: 0.9rem;
+}

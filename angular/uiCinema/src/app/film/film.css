@@ -6,6 +6,10 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+a {
+  text-decoration: none;
+}
+
 .film-card:hover,
 .film-card:focus-visible {
   transform: translateY(-6px);
