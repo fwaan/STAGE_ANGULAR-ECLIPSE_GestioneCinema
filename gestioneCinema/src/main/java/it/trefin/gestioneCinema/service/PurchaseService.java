@@ -123,9 +123,7 @@ public class PurchaseService {
 		
 		Ticket bought_ticket = new Ticket(unpacked_p, unpacked_u, type, dom.getPm());
 		
-		ticket_repo.insert(unpacked_p.getHall(), unpacked_p.getProjection_time(), unpacked_u.getId(), type.getType(), dom.getPm().getName());
-		
-		return bought_ticket;
+		return ticket_repo.save(bought_ticket);
 		
 	}
 	

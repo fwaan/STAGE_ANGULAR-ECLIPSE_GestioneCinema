@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.trefin.gestioneCinema.model.Customer;
 import it.trefin.gestioneCinema.model.auth.AuthToken;
+import it.trefin.gestioneCinema.repository.CustomerRepository;
 import it.trefin.gestioneCinema.service.AuthService;
 import it.trefin.gestioneCinema.service.CustomerAuthenticationService;
 import jakarta.transaction.Transactional;
@@ -28,8 +30,10 @@ public class AuthController {
 	private final CustomerAuthenticationService customerAuthService;
 	private final AuthService authService;
 	private final AuthenticationManager manager;
+	private final CustomerRepository customerRepo;
 
-	public AuthController(AuthService authService, CustomerAuthenticationService customerAuthService, AuthenticationManager manager) {
+	public AuthController(AuthService authService, CustomerAuthenticationService customerAuthService, AuthenticationManager manager, CustomerRepository customerRepo) {
+		this.customerRepo = customerRepo;
 		this.authService = authService;
 		this.customerAuthService = customerAuthService;
 		this.manager = manager;
@@ -63,7 +67,8 @@ public class AuthController {
 				new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
 		);
 		if(authentication.isAuthenticated()) {
-			return authService.generateToken(request.getUsername(), authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")));
+			Long uid = customerRepo.findByCustAuthEmail(request.getUsername()).map(Customer::getId).orElse(null);
+			return authService.generateToken(request.getUsername(), authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")), uid);
 		
 		}
 		else

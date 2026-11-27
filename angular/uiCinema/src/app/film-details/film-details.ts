@@ -2,7 +2,7 @@ import { Component, inject, input, Signal, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectionService } from '../service/projection-service';
 import { FilmModel } from '../model/film';
-import { map, Observable, switchMap } from 'rxjs';
+import { map, Observable, shareReplay, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FilmService } from '../service/film-service';
 import { ProjectionModel } from '../model/projection';
@@ -11,6 +11,11 @@ import { AvailableProjections } from '../available-projections/available-project
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { FilmNavBar } from './film-nav-bar/film-nav-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../service/auth-service';
+import { AuthDialog } from '../auth-dialog/auth-dialog';
+import { PurchaseDialog } from '../purchase-dialog/purchase-dialog';
 
 
 @Component({
@@ -26,23 +31,22 @@ export class FilmDetails {
   filmService: FilmService = inject(FilmService);
   filmTitle: string = "";
   film: Observable<FilmModel>;
-  projections: Observable<ProjectionModel[]>;
+  projections!: Observable<ProjectionModel[]>;
+  private dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
+  private auth = inject(AuthService);
   omdbResponse: Observable<OmdbResponse> | undefined;
-  availableSeats: Observable<Number>[];
+  availableSeats: Observable<Number>[] = [];
 
   private readonly baseApi = "http://www.omdbapi.com/?&apikey=ab75fbe1";
 
   constructor(){
     this.filmTitle = String(this.route.snapshot.params['title']);
     this.film = this.filmService.findByTitle(this.filmTitle);
-    this.projections = this.projectionService.getByMovieTitle(this.filmTitle); 
+    this.caricaProiezioni();
 
     this.omdbResponse = this.fetcher.get<OmdbResponse>(this.baseApi + "&t=" + this.filmTitle);
     
-    this.availableSeats = [];
-    this.projections.forEach((p) => {
-      p.forEach((pp) => this.availableSeats.push(this.projectionService.availableSeats(pp)))
-    });
     
     
     //Cosa orrenda ma l'ho imparata solo ora
@@ -57,8 +61,41 @@ export class FilmDetails {
     //return 10;
   }
 
-  acquista(p: ProjectionModel){
+  private caricaProiezioni(): void {
+    const proiezioni$ = this.projectionService.getByMovieTitle(this.filmTitle).pipe(shareReplay(1));
+    this.projections = proiezioni$;
+    this.availableSeats = [];
+    proiezioni$.subscribe((list) => {
+      this.availableSeats = list.map((pp) => this.projectionService.availableSeats(pp));
+    });
+  }
 
+  acquista(p: ProjectionModel){
+    if (!this.auth.isLoggedIn()) {
+      this.dialog
+        .open(AuthDialog, { width: '440px', maxWidth: '95vw' })
+        .afterClosed()
+        .subscribe((ok) => {
+          if (ok) this.apriAcquisto(p);
+        });
+      return;
+    }
+    this.apriAcquisto(p);
+  }
+
+  private apriAcquisto(p: ProjectionModel): void {
+    this.dialog
+      .open(PurchaseDialog, {
+        width: '440px',
+        maxWidth: '95vw',
+        data: { title: this.filmTitle, projection: p },
+      })
+      .afterClosed()
+      .subscribe((acquistato) => {
+        if (acquistato) {
+          window.location.reload();
+        }
+      });
   }
   //Chiamata inutile
   

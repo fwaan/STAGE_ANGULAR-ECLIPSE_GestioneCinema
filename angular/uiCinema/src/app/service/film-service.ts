@@ -32,11 +32,11 @@ export class FilmService {
         return this.client.post(this.baseApi + "/insert", film, {responseType: 'text'});
     }
 
-    update(film: number, newFilm: NewFilm) {
-        return this.client.put<FilmModel>(this.baseApi + "/modify" + film, newFilm);
+    modify(id: number, film: NewFilm): Observable<string> {
+        return this.client.put(this.baseApi + "/modify/" + id, film, {responseType: 'text'});
     }
 
-    delete(film: number) {
-        return this.client.delete<FilmModel>(this.baseApi + "/delete" + film);
+    remove(id: number): Observable<string> {
+        return this.client.delete(this.baseApi + "/delete/" + id, {responseType: 'text'});
     }
 }

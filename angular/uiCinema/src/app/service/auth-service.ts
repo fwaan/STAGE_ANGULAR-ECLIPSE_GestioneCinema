@@ -38,6 +38,11 @@ export class AuthService {
   });
 
 
+  userId = computed(() => {
+    const p = this.decodePayload(this.token());
+    return typeof p?.uid === 'number' ? (p.uid as number) : null;
+  });
+
   login(email: string, password: string): Observable<string> {
     return this.client
       .post(this.baseApi + '/generateToken', { username: email, password }, { responseType: 'text' })

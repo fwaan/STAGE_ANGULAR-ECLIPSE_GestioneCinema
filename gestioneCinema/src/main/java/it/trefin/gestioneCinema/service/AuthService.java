@@ -29,6 +29,14 @@ public class AuthService {
 		return createToken(claims, email);
 	}
 	
+	public String generateToken(String email, boolean admin, Long uid) {
+		Map<String, Object> claims = new HashMap<>();
+		claims.put("admin", admin);
+		if (uid != null)
+			claims.put("uid", uid);
+		return createToken(claims, email);
+	}
+	
 	private String createToken(Map<String, Object> claims, String email) {
 		return Jwts.builder()
 				.claims(claims)
